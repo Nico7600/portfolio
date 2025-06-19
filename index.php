@@ -1,0 +1,401 @@
+<?php
+$lang = $_GET['lang'] ?? 'fr';
+$langFile = __DIR__ . "/lang.$lang.php";
+if (!file_exists($langFile)) {
+    $langFile = __DIR__ . "/lang.fr.php";
+}
+$t = include $langFile;
+?>
+<!DOCTYPE html>
+<html lang="<?= $lang ?>" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?= $t['title'] ?></title>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        .fade-in {
+            opacity: 0;
+            transform: translateY(80px) scale(0.95) rotateX(10deg);
+            filter: blur(12px) brightness(1.2);
+            animation: fadeInUp 1.1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        @keyframes fadeInUp {
+            60% {
+                opacity: 1;
+                filter: blur(2px) brightness(1.05);
+                transform: translateY(-8px) scale(1.01) rotateX(0deg);
+            }
+            80% {
+                filter: blur(0.5px) brightness(1);
+                transform: translateY(2px) scale(1) rotateX(0deg);
+            }
+            100% {
+                opacity: 1;
+                filter: blur(0) brightness(1);
+                transform: none;
+            }
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Public Sans', 'Montserrat', 'Roboto', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#161b22',      
+                        secondary: '#0d1117',    
+                        accent: '#e53935',       
+                        'gray-border': '#30363d',
+                        'gray-text': '#fbeee0',  
+                        'container-bg': '#231815', 
+                        'container-grad1': '#231815',
+                        'container-grad2': '#7c1d1d',
+                        'container-grad3': '#e53935',
+                    },
+                },
+            },
+        };
+    </script>
+</head>
+<body class="bg-gradient-to-br from-secondary via-primary to-gray-900 min-h-screen text-gray-text font-sans">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-primary to-secondary border-b border-accent shadow-xl sticky top-0 z-50 fade-in" style="animation-delay:0.1s">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center py-6 px-4 gap-4">
+            <h1 class="text-4xl font-extrabold tracking-tight flex items-center gap-3 drop-shadow-lg">
+                <i class="fas fa-code text-accent animate-pulse"></i>
+                <?= $t['title'] ?>
+            </h1>
+            <!-- Dropdown for language selection -->
+            <div class="relative">
+                <button id="langDropdownBtn" class="flex items-center gap-2 px-4 py-2 bg-accent text-gray-text rounded focus:outline-none">
+                    <i class="fas fa-globe"></i>
+                    <?= strtoupper($lang) ?>
+                    <i class="fas fa-chevron-down text-xs"></i>
+                </button>
+                <div id="langDropdown" class="absolute right-0 mt-2 w-40 bg-container-bg border border-accent rounded shadow-lg hidden z-50">
+                    <a href="?lang=fr" class="flex items-center gap-2 px-4 py-2 hover:bg-accent/30 <?= $lang === 'fr' ? 'font-bold text-accent' : '' ?>">
+                        <span class="fi fi-fr"></span> Français
+                    </a>
+                    <a href="?lang=en" class="flex items-center gap-2 px-4 py-2 hover:bg-accent/30 <?= $lang === 'en' ? 'font-bold text-accent' : '' ?>">
+                        <span class="fi fi-gb"></span> English
+                    </a>
+                    <a href="?lang=nl" class="flex items-center gap-2 px-4 py-2 hover:bg-accent/30 <?= $lang === 'nl' ? 'font-bold text-accent' : '' ?>">
+                        <span class="fi fi-nl"></span> Nederlands
+                    </a>
+                </div>
+            </div>
+            <script>
+                // Simple dropdown logic
+                document.addEventListener('DOMContentLoaded', function() {
+                    const btn = document.getElementById('langDropdownBtn');
+                    const menu = document.getElementById('langDropdown');
+                    btn.onclick = function(e) {
+                        e.stopPropagation();
+                        menu.classList.toggle('hidden');
+                    };
+                    document.body.onclick = function() {
+                        menu.classList.add('hidden');
+                    };
+                });
+            </script>
+            <!-- Optionally add flag icons CSS (flag-icons) if you want real flags -->
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons/css/flag-icons.min.css"/>
+        </div>
+    </header>
+    <div class="h-10"></div>
+    <!-- Bio Section -->
+    <?php
+        $chemin_image = "img/moi.JPG";
+    ?>
+    <section class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-10 py-16 px-4 bg-container-bg rounded-xl shadow-lg transition-colors duration-300 fade-in" style="animation-delay:0.2s">
+        <div class="flex-shrink-0 relative group flex flex-col items-center">
+            <img src="<?php echo $chemin_image; ?>" alt="Nicolas"
+                class="w-48 h-48 rounded-full border-4 border-accent shadow-2xl object-cover object-center transition-transform duration-300 group-hover:scale-105 bg-transparent" />
+            <span class="mt-4 inline-block bg-accent/20 text-accent px-4 py-2 rounded-full text-sm font-semibold text-center w-full max-w-xs">
+                Statut : En attente d'une réponse d'alternance (Alegorix)
+            </span>
+        </div>
+        <div class="flex-1">
+            <h2 class="text-3xl md:text-4xl font-extrabold mb-3 flex items-center gap-3">
+                <i class="fas fa-user-circle text-accent"></i>
+                Nicolas Deprets
+            </h2>
+            <div class="flex items-center gap-3 mb-2">
+                <span class="inline-block bg-accent/20 text-accent px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider">20 ans</span>
+                <span class="inline-block bg-accent/20 text-accent px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider">Péruwelz (Hainaut)</span>
+                <span class="inline-block bg-green-600/20 text-green-400 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider"><?= $t['header'] ?></span>
+            </div>
+            <p class="text-gray-text mb-6 text-lg leading-relaxed border-l-4 border-accent pl-4 italic"><?= $t['about_text'] ?></p>
+            <div class="flex gap-6 mt-2">
+                <a href="https://github.com/nico7600" target="_blank" class="text-gray-300 hover:text-accent text-2xl flex items-center gap-2 transition">
+                    <i class="fab fa-github"></i> <span class="text-base font-medium">GitHub</span>
+                </a>
+                <a href="https://www.linkedin.com/in/nicolas-deprets-62a6b4335/" target="_blank" class="text-gray-300 hover:text-accent text-2xl flex items-center gap-2 transition">
+                    <i class="fab fa-linkedin"></i> <span class="text-base font-medium">LinkedIn</span>
+                </a>
+                <a href="mailto:depretsnico@gmail.com" class="text-gray-300 hover:text-accent text-2xl flex items-center gap-2 transition">
+                    <i class="fas fa-envelope"></i> <span class="text-base font-medium">Mail</span>
+                </a>
+            </div>
+        </div>
+    </section>
+    <!-- Separator -->
+    <div class="max-w-4xl mx-auto my-8 border-t-2 border-accent/30 fade-in" style="animation-delay:0.25s"></div>
+    <!-- Parcours scolaire Section -->
+    <section class="max-w-6xl mx-auto py-10 px-4 bg-container-bg rounded-xl shadow-lg fade-in" style="animation-delay:0.3s">
+        <h2 class="text-3xl font-bold mb-8 flex items-center gap-3">
+            <i class="fas fa-graduation-cap text-accent"></i>
+            <?= $t['school_path'] ?>
+        </h2>
+        <ul class="space-y-4 text-lg">
+            <li class="flex items-center gap-3">
+                <span class="inline-block bg-accent/20 text-accent px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider">2024-2025</span>
+                <?= $t['school_2024'] ?>
+            </li>
+            <li class="flex items-center gap-3">
+                <span class="inline-block bg-accent/20 text-accent px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider">2023-2024</span>
+                <?= $t['school_2023'] ?>
+            </li>
+            <li class="flex items-center gap-3">
+                <span class="inline-block bg-accent/20 text-accent px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider">2022-2023</span>
+                <?= $t['school_2022'] ?>
+            </li>
+        </ul>
+    </section>
+    <!-- Separator -->
+    <div class="max-w-4xl mx-auto my-8 border-t-2 border-accent/30 fade-in" style="animation-delay:0.35s"></div>
+    <!-- Personnalité Section -->
+    <section class="max-w-6xl mx-auto py-10 px-4 bg-container-bg rounded-xl shadow-lg fade-in" style="animation-delay:0.4s">
+        <h2 class="text-3xl font-bold mb-8 flex items-center gap-3">
+            <i class="fas fa-user-astronaut text-accent"></i>
+            Personnalité
+        </h2>
+        <ul class="flex flex-wrap gap-6 text-lg">
+            <li class="flex items-center gap-3 bg-accent/10 text-white px-5 py-3 rounded-xl font-semibold shadow">
+                <i class="fas fa-users" style="color:#60a5fa"></i> Sociable
+            </li>
+            <li class="flex items-center gap-3 bg-accent/10 text-white px-5 py-3 rounded-xl font-semibold shadow">
+                <i class="fas fa-sync-alt" style="color:#f59e42"></i> M'adapte bien
+            </li>
+            <li class="flex items-center gap-3 bg-accent/10 text-white px-5 py-3 rounded-xl font-semibold shadow">
+                <i class="fas fa-layer-group" style="color:#34d399"></i> Polyvalent
+            </li>
+            <li class="flex items-center gap-3 bg-accent/10 text-white px-5 py-3 rounded-xl font-semibold shadow">
+                <i class="fas fa-hard-hat" style="color:#fbbf24"></i> Travailleur
+            </li>
+            <li class="flex items-center gap-3 bg-accent/10 text-white px-5 py-3 rounded-xl font-semibold shadow">
+                <i class="far fa-laugh-beam" style="color:#f472b6"></i> Drôle
+            </li>
+        </ul>
+    </section>
+    <!-- Separator -->
+    <div class="max-w-4xl mx-auto my-8 border-t-2 border-accent/30 fade-in" style="animation-delay:0.45s"></div>
+    <!-- Passion Section -->
+    <section class="max-w-6xl mx-auto py-10 px-4 bg-container-bg rounded-xl shadow-lg fade-in" style="animation-delay:0.5s">
+        <h2 class="text-3xl font-bold mb-8 flex items-center gap-3">
+            <i class="fas fa-heart text-accent"></i>
+            Passions
+        </h2>
+        <ul class="flex flex-wrap gap-6 text-lg">
+            <li class="flex items-center gap-3 bg-accent/10 text-white px-5 py-3 rounded-xl font-semibold shadow">
+                <i class="fas fa-horse" style="color:#a78bfa"></i> Équitation
+            </li>
+            <li class="flex items-center gap-3 bg-accent/10 text-white px-5 py-3 rounded-xl font-semibold shadow">
+                <i class="fas fa-gamepad" style="color:#38bdf8"></i> Jeux vidéo
+            </li>
+            <li class="flex items-center gap-3 bg-accent/10 text-white px-5 py-3 rounded-xl font-semibold shadow">
+                <i class="fas fa-tree" style="color:#4ade80"></i> Balade dehors
+            </li>
+            <li class="flex items-center gap-3 bg-accent/10 text-white px-5 py-3 rounded-xl font-semibold shadow">
+                <i class="fas fa-user-friends" style="color:#f87171"></i> Passer du temps avec des amis
+            </li>
+        </ul>
+    </section>
+    <!-- Separator -->
+    <div class="max-w-4xl mx-auto my-8 border-t-2 border-accent/30 fade-in" style="animation-delay:0.55s"></div>
+    <!-- Projects Section -->
+    <section class="max-w-6xl mx-auto py-10 px-4 fade-in" style="animation-delay:0.6s">
+        <h2 class="text-3xl font-bold mb-8 flex items-center gap-3">
+            <i class="fas fa-folder-open text-accent"></i>
+            <?= $t['projects'] ?>
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-container-bg rounded-2xl shadow-xl p-8 flex flex-col gap-4 border border-accent hover:scale-[1.03] transition group">
+                <div class="flex items-center gap-4">
+                    <i class="fas fa-tools text-accent text-3xl group-hover:rotate-12 transition"></i>
+                    <span class="text-2xl font-semibold">
+                        <?= $lang === 'fr' ? 'NationsTool' : ($lang === 'en' ? 'NationsTool' : 'NationsTool') ?>
+                    </span>
+                </div>
+                <p class="text-gray-text text-base">
+                    <?= $lang === 'fr'
+                        ? 'Outil de gestion pour NationsGlory (Minecraft).'
+                        : ($lang === 'en'
+                            ? 'Management tool for NationsGlory (Minecraft).'
+                            : 'Beheerhulpmiddel voor NationsGlory (Minecraft).') ?>
+                </p>
+                <a href="https://rp.nationstools.fr" target="_blank" class="text-accent hover:underline mt-2 flex items-center gap-2 font-semibold">
+                    <i class="fas fa-external-link-alt"></i>
+                    <?= $lang === 'fr' ? 'Accéder au site' : ($lang === 'en' ? 'Visit site' : 'Site bezoeken') ?>
+                </a>
+            </div>
+            <div class="bg-container-bg rounded-2xl shadow-xl p-8 flex flex-col gap-4 border border-accent hover:scale-[1.03] transition group">
+                <div class="flex items-center gap-4">
+                    <i class="fas fa-briefcase text-accent text-3xl group-hover:rotate-12 transition"></i>
+                    <span class="text-2xl font-semibold">
+                        <?= $lang === 'fr' ? 'Portfolio' : ($lang === 'en' ? 'Portfolio' : 'Portfolio') ?>
+                    </span>
+                </div>
+                <p class="text-gray-text text-base">
+                    <?= $lang === 'fr'
+                        ? 'Ce site web, mon portfolio personnel.'
+                        : ($lang === 'en'
+                            ? 'This website, my personal portfolio.'
+                            : 'Deze website, mijn persoonlijke portfolio.') ?>
+                </p>
+                <a href="#" class="text-accent hover:underline mt-2 flex items-center gap-2 font-semibold">
+                    <i class="fas fa-external-link-alt"></i>
+                    <?= $lang === 'fr' ? 'Voir plus' : ($lang === 'en' ? 'See more' : 'Meer info') ?>
+                </a>
+            </div>
+            <div class="bg-container-bg rounded-2xl shadow-xl p-8 flex flex-col gap-4 border border-accent hover:scale-[1.03] transition group">
+                <div class="flex items-center gap-4">
+                    <i class="fas fa-ticket-alt text-accent text-3xl group-hover:rotate-12 transition"></i>
+                    <span class="text-2xl font-semibold">
+                        <?= $lang === 'fr' ? 'Workshop Groupe' : ($lang === 'en' ? 'Workshop Group' : 'Workshop Groep') ?>
+                    </span>
+                </div>
+                <p class="text-gray-text text-base">
+                    <?= $lang === 'fr'
+                        ? 'Site de tickets en ligne pour la gestion de demandes et incidents.'
+                        : ($lang === 'en'
+                            ? 'Online ticketing site for request and incident management.'
+                            : 'Online ticketsysteem voor aanvraag- en incidentbeheer.') ?>
+                </p>
+                <a href="https://workshopgroupe.nicolasdeprets.online" target="_blank" class="text-accent hover:underline mt-2 flex items-center gap-2 font-semibold">
+                    <i class="fas fa-external-link-alt"></i>
+                    <?= $lang === 'fr' ? 'Accéder au site' : ($lang === 'en' ? 'Visit site' : 'Site bezoeken') ?>
+                </a>
+            </div>
+        </div>
+    </section>
+    <!-- Separator -->
+    <div class="max-w-4xl mx-auto my-8 border-t-2 border-accent/30 fade-in" style="animation-delay:0.65s"></div>
+    <!-- Competences Section -->
+    <section class="max-w-6xl mx-auto py-10 px-4 bg-container-bg rounded-xl shadow-lg fade-in" style="animation-delay:0.7s">
+        <h2 class="text-3xl font-bold mb-8 flex items-center gap-3">
+            <i class="fas fa-lightbulb text-accent"></i>
+            <?= $t['competences'] ?>
+        </h2>
+        <div>
+            <!-- Onglets -->
+            <div class="flex gap-4 mb-6">
+                <button id="tab-langages" class="competence-tab px-4 py-2 rounded-t bg-accent text-gray-text font-bold focus:outline-none flex items-center gap-2">
+                    <i class="fas fa-code"></i> <?= $t['tab_langages'] ?>
+                </button>
+                <button id="tab-hebergeur" class="competence-tab px-4 py-2 rounded-t bg-accent/70 text-gray-text font-bold focus:outline-none flex items-center gap-2">
+                    <i class="fas fa-server"></i> <?= $t['tab_hebergeur'] ?>
+                </button>
+                <button id="tab-autre" class="competence-tab px-4 py-2 rounded-t bg-accent/70 text-gray-text font-bold focus:outline-none flex items-center gap-2">
+                    <i class="fas fa-ellipsis-h"></i> <?= $t['tab_autre'] ?>
+                </button>
+            </div>
+            <!-- Contenus des onglets -->
+            <div id="content-langages" class="competence-content">
+                <div class="flex flex-wrap gap-6">
+                    <div class="flex items-center gap-3 bg-container-bg text-[#8993be] px-6 py-4 rounded-xl shadow-lg text-xl font-semibold border border-accent">
+                        <i class="fab fa-php"></i> PHP
+                    </div>
+                    <div class="flex items-center gap-3 bg-container-bg text-[#e44d26] px-6 py-4 rounded-xl shadow-lg text-xl font-semibold border border-accent">
+                        <i class="fab fa-html5"></i> HTML
+                    </div>
+                    <div class="flex items-center gap-3 bg-container-bg text-[#1572b6] px-6 py-4 rounded-xl shadow-lg text-xl font-semibold border border-accent">
+                        <i class="fab fa-css3-alt"></i> CSS
+                    </div>
+                    <div class="flex items-center gap-3 bg-container-bg text-[#61dafb] px-6 py-4 rounded-xl shadow-lg text-xl font-semibold border border-accent">
+                        <i class="fab fa-react"></i> React.js
+                    </div>
+                    <div class="flex items-center gap-3 bg-container-bg text-[#f7df1e] px-6 py-4 rounded-xl shadow-lg text-xl font-semibold border border-accent">
+                        <i class="fab fa-js-square"></i> JavaScript <span class="text-xs font-normal ml-1"></span>
+                    </div>
+                    <div class="flex items-center gap-3 bg-container-bg text-[#f34f29] px-6 py-4 rounded-xl shadow-lg text-xl font-semibold border border-accent">
+                        <i class="fab fa-git-alt"></i> Git / GitHub
+                    </div>
+                </div>
+            </div>
+            <div id="content-hebergeur" class="competence-content hidden">
+                <div class="flex flex-wrap gap-6">
+                    <div class="flex items-center gap-3 bg-container-bg text-[#12306b] px-6 py-4 rounded-xl shadow-lg text-xl font-semibold border border-accent">
+                        <i class="fas fa-server"></i> Gestion de site en ligne sous OVH
+                    </div>
+                    <div class="flex items-center gap-3 bg-container-bg text-[#00bfae] px-6 py-4 rounded-xl shadow-lg text-xl font-semibold border border-accent">
+                        <i class="fas fa-server"></i> Gestion de site en ligne sous MineStrator
+                    </div>
+                </div>
+            </div>
+            <div id="content-autre" class="competence-content hidden">
+                <div class="flex flex-wrap gap-6">
+                    <div class="flex items-center gap-3 bg-container-bg text-[#00618a] px-6 py-4 rounded-xl shadow-lg text-xl font-semibold border border-accent">
+                        <i class="fas fa-database"></i> Base de données MySQL sous phpMyAdmin
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            // Simple onglet JS
+            const tabs = [
+                {btn: 'tab-langages', content: 'content-langages'},
+                {btn: 'tab-hebergeur', content: 'content-hebergeur'},
+                {btn: 'tab-autre', content: 'content-autre'}
+            ];
+            tabs.forEach((tab, idx) => {
+                document.getElementById(tab.btn).onclick = function() {
+                    tabs.forEach((t, i) => {
+                        document.getElementById(t.content).classList.toggle('hidden', i !== idx);
+                        document.getElementById(t.btn).classList.toggle('bg-accent', i === idx);
+                        document.getElementById(t.btn).classList.toggle('bg-accent/70', i !== idx);
+                    });
+                };
+            });
+        </script>
+    </section>
+    <!-- Separator -->
+    <div class="max-w-4xl mx-auto my-8 border-t-2 border-accent/30 fade-in" style="animation-delay:0.75s"></div>
+    <!-- Software/Integration Section -->
+    <section class="max-w-6xl mx-auto py-10 px-4 bg-container-bg rounded-xl shadow-lg fade-in" style="animation-delay:0.8s">
+        <h2 class="text-3xl font-bold mb-8 flex items-center gap-3">
+            <i class="fas fa-plug text-accent"></i>
+            <?= $t['software_integration'] ?? 'Software / Integration' ?>
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <?php
+            $software = [
+                [$t['software_github_title'], $t['software_github_desc'], 'fab fa-github'],
+                [$t['software_tailwind_title'], $t['software_tailwind_desc'], 'fas fa-wind'],
+                [$t['software_fa_title'], $t['software_fa_desc'], 'fas fa-icons'],
+                [$t['software_bootstrap_title'], $t['software_bootstrap_desc'], 'fab fa-bootstrap'],
+            ];
+            foreach ($software as $item) {
+                echo '<div class="flex items-center gap-6 bg-container-bg rounded-2xl p-7 shadow-xl border border-accent hover:scale-105 transition">';
+                echo '<i class="'.$item[2].' text-4xl text-gray-text drop-shadow"></i>';
+                echo '<div>';
+                echo '<h3 class="text-xl font-bold text-gray-text mb-1">'.$item[0].'</h3>';
+                echo '<p class="text-gray-text">'.$item[1].'</p>';
+                echo '</div>';
+                echo '</div>';
+            }
+            ?>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="mt-16 py-8 text-center text-gray-text text-base border-t-2 border-accent/30 bg-primary/80 backdrop-blur fade-in" style="animation-delay:0.85s">
+        &copy; <?= date('Y') ?> Nicolas Deprets.
+    </footer>
+</body>
+</html>
