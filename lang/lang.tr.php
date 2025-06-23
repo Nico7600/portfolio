@@ -7,6 +7,8 @@ return [
     'school_2024' => 'Web geliştirme stajının başlangıcı.',
     'school_2023' => 'BTS SIO ikinci yıl, SLAM seçeneği.',
     'school_2022' => 'BTS SIO birinci yıl.',
+    'school_2025' => '2025-2026 IFAPME Charleroi’de iş başı eğitimli web geliştirici olarak 2. yıl. (E6K-A6K) <br>(İkinci Assistant Dev)',
+    'school_2026' => '2026-2027 IFAPME Charleroi’de iş başı eğitimli web geliştirici olarak 3. yıl.',
     'projects' => 'Projeler',
     'competences' => 'Yetenekler',
     'tab_langages' => 'Programlama Dilleri',

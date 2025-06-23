@@ -7,6 +7,8 @@ return [
     'school_2024' => 'Rozpoczęcie stażu z zakresu web developmentu.',
     'school_2023' => 'Drugi rok BTS SIO, opcja SLAM.',
     'school_2022' => 'Pierwszy rok BTS SIO.',
+    'school_2025' => '2. rok jako webový vývojář v duálním vzdělávání na IFAPME Charleroi. (E6K-A6K) <br>(Druhý Assistant Dev)',
+    'school_2026' => '3. rok jako webový vývojář w duálním vzdělávání na IFAPME Charleroi.',
     'projects' => 'Projekty',
     'competences' => 'Umiejętności',
     'tab_langages' => 'Języki programowania',

@@ -7,6 +7,8 @@ return [
     'school_2024' => 'Έναρξη πρακτικής στην ανάπτυξη ιστοσελίδων.',
     'school_2023' => 'Δεύτερο έτος BTS SIO, επιλογή SLAM.',
     'school_2022' => 'Πρώτο έτος BTS SIO.',
+    'school_2025' => '2η χρονιά ως web developer με εναλλασσόμενη εκπαίδευση στο IFAPME Charleroi. (E6K-A6K) <br>(Δεύτερος Assistant Dev)',
+    'school_2026' => '3η χρονιά ως web developer με εναλλασσόμενη εκπαίδευση στο IFAPME Charleroi.',
     'projects' => 'Έργα',
     'competences' => 'Δεξιότητες',
     'tab_langages' => 'Γλώσσες προγραμματισμού',

@@ -7,6 +7,8 @@ return [
     'school_2024' => 'Start av praktik inom webbutveckling.',
     'school_2023' => 'Andra året på BTS SIO, SLAM-inriktning.',
     'school_2022' => 'Första året på BTS SIO.',
+    'school_2025' => '2:a året som lärlingswebbutvecklare på IFAPME Charleroi. (E6K-A6K) <br>(Andra Assistant Dev)',
+    'school_2026' => '3:e året som lärlingswebbutvecklare på IFAPME Charleroi.',
     'projects' => 'Projekt',
     'competences' => 'Kompetenser',
     'tab_langages' => 'Programmeringsspråk',
